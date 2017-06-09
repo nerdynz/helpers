@@ -1,5 +1,7 @@
 package helpers
 
+import "strconv"
+
 // TextFromNumber Returns the text based form of a number.
 // e.g. 1 would return One
 func TextFromNumber(num int) string {
@@ -44,4 +46,27 @@ func TextFromNumber(num int) string {
 		return "Nineteen"
 	}
 	return "Zero"
+}
+
+func padTimes(str string, n int) (out string) {
+	for i := 0; i < n; i++ {
+		out += str
+	}
+	return
+}
+
+// Left left-pads the string with pad up to len runes
+// len may be exceeded if
+func PadLeft(str string, length int, pad string) string {
+	return padTimes(pad, length-len(str)) + str
+}
+
+// Right right-pads the string with pad up to len runes
+func PadRight(str string, length int, pad string) string {
+	return str + padTimes(pad, length-len(str))
+}
+
+func PadIntLeft(num int, len int, pad string) string {
+	str := strconv.Itoa(num)
+	return PadLeft(str, len, pad)
 }
