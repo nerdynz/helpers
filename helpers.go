@@ -70,3 +70,10 @@ func PadIntLeft(num int, len int, pad string) string {
 	str := strconv.Itoa(num)
 	return PadLeft(str, len, pad)
 }
+
+func Round(val float64) int {
+	if val < 0 {
+		return int(val - 0.5)
+	}
+	return int(val + 0.5)
+}
