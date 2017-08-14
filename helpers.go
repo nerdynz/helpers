@@ -1,6 +1,10 @@
 package helpers
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+	"unicode"
+)
 
 // TextFromNumber Returns the text based form of a number.
 // e.g. 1 would return One
@@ -76,4 +80,26 @@ func Round(val float64) int {
 		return int(val - 0.5)
 	}
 	return int(val + 0.5)
+}
+
+func KebabCase(in string) string {
+	out := SnakeCase(in)
+	out = strings.Replace(out, "_", "-", -1)
+	return out
+}
+
+func SnakeCase(in string) string {
+	in = strings.Replace(in, " ", "_", -1)
+	runes := []rune(in)
+	length := len(runes)
+
+	var out []rune
+	for i := 0; i < length; i++ {
+		if i > 0 && unicode.IsUpper(runes[i]) && ((i+1 < length && unicode.IsLower(runes[i+1])) || unicode.IsLower(runes[i-1])) {
+			out = append(out, '_')
+		}
+		out = append(out, unicode.ToLower(runes[i]))
+	}
+
+	return strings.Replace(string(out), "__", "_", -1)
 }
