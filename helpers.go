@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"math"
 	"strconv"
 	"strings"
 	"unicode"
@@ -80,6 +81,11 @@ func Round(val float64) int {
 		return int(val - 0.5)
 	}
 	return int(val + 0.5)
+}
+
+func ToFixed(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+	return float64(Round(num*output)) / output
 }
 
 func KebabCase(in string) string {
