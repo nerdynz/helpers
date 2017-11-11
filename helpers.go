@@ -83,6 +83,7 @@ func Round(val float64) int {
 	return int(val + 0.5)
 }
 
+// ToFixed rounds to the specified decimal place
 func ToFixed(num float64, precision int) float64 {
 	output := math.Pow(10, float64(precision))
 	return float64(Round(num*output)) / output
