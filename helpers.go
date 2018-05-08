@@ -110,3 +110,10 @@ func SnakeCase(in string) string {
 
 	return strings.Replace(string(out), "__", "_", -1)
 }
+
+func Substring(str string, length int) string {
+	if len(str) > length {
+		return strings.Join(strings.Split(str, "")[:length], "")
+	}
+	return str
+}
