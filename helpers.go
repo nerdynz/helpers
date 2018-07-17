@@ -111,6 +111,26 @@ func SnakeCase(in string) string {
 	return strings.Replace(string(out), "__", "_", -1)
 }
 
+func SplitTitleCase(in string) string {
+	out := titleCase(in, " ")
+	return out
+}
+
+func TitleCase(in string) string {
+	out := titleCase(in, "")
+	return out
+}
+
+func titleCase(in string, sep string) string {
+	out := SnakeCase(in)
+	words := strings.Split(out, "_")
+	for i, word := range words {
+		words[i] = strings.Title(word)
+	}
+	out = strings.Join(words, sep)
+	return out
+}
+
 func Substring(str string, length int) string {
 	if len(str) > length {
 		return strings.Join(strings.Split(str, "")[:length], "")
