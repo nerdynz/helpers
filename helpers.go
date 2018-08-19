@@ -137,3 +137,10 @@ func Substring(str string, length int) string {
 	}
 	return str
 }
+
+func TSVSearch(str string) string {
+	if str == "" {
+		return str
+	}
+	return strings.Join(strings.Split(str, " "), ":* & ") + ":*"
+}
