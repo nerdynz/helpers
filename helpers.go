@@ -4,6 +4,7 @@ import (
 	"math"
 	"strconv"
 	"strings"
+	"time"
 	"unicode"
 )
 
@@ -143,4 +144,12 @@ func TSVSearch(str string) string {
 		return str
 	}
 	return strings.Join(strings.Split(str, " "), ":* & ") + ":*"
+}
+
+func TimeInLoc(t time.Time, loc string) (time.Time, error) {
+	l, err := time.LoadLocation(loc)
+	if err != nil {
+		return t, err
+	}
+	return t.In(l), nil
 }
