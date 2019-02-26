@@ -153,3 +153,7 @@ func TimeInLoc(t time.Time, loc string) (time.Time, error) {
 	}
 	return t.In(l), nil
 }
+
+func FormatMoney(dec float64) string {
+	return "$" + strconv.FormatFloat(ToFixed(dec, 2), 'f', 2, 64)
+}
