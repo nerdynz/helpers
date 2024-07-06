@@ -157,3 +157,31 @@ func TimeInLoc(t time.Time, loc string) (time.Time, error) {
 func FormatMoney(dec float64) string {
 	return "$" + strconv.FormatFloat(ToFixed(dec, 2), 'f', 2, 64)
 }
+
+func appendSiteULID(siteULID string, whereSql string, args ...interface{}) (string, []interface{}, error) {
+	if !strings.Contains(whereSql, "$SITEULID") {
+		return whereSql, args, errors.New("No $SITEULID placeholder defined")
+	}
+	args = append(args, siteULID)
+	position := len(args)
+	if strings.Contains(whereSql, ".$SITEULID") {
+		newSQL := strings.Split(whereSql, "$SITEULID")[0]
+		replaceSQLParts := strings.Split(newSQL, " ")
+		replaceSQLTablePrefix := replaceSQLParts[len(replaceSQLParts)-1]
+
+		whereSql = strings.Replace(whereSql, replaceSQLTablePrefix+"$SITEULID", " and "+replaceSQLTablePrefix+"site_ulid = $"+strconv.Itoa(position), -1)
+	} else if strings.Contains(whereSql, "$SITEULID") {
+		whereSql = strings.Replace(whereSql, "$SITEULID", " site_ulid = $"+strconv.Itoa(position), -1)
+	} else {
+		whereSql += " and site_ulid = $" + strconv.Itoa(position)
+	}
+	return whereSql, args, nil
+}
+
+func BastardizeSql(siteULID string, whereSql string, args ...interface{}) (string, []interface{}, error) {
+	whereSql = strings.Trim(whereSql, " ")
+	if !strings.HasPrefix(strings.ToLower(whereSql), "where") {
+		whereSql += "where "
+	}
+	return appendSiteULID(siteULID, " "+whereSql+" ", args)
+}
