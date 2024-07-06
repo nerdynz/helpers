@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"errors"
 	"math"
 	"strconv"
 	"strings"
