@@ -7,6 +7,7 @@ import (
 	"time"
 	"unicode"
 
+	"github.com/gosimple/slug"
 	"github.com/leekchan/accounting"
 )
 
@@ -159,4 +160,8 @@ func FormatMoney(dec float64) string {
 func Currency(dec float64) string {
 	ac := accounting.Accounting{Symbol: "$", Precision: 2}
 	return ac.FormatMoneyFloat64(dec)
+}
+
+func Slugify(str string) string {
+	return slug.Make(str)
 }
